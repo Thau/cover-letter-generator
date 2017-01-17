@@ -1,0 +1,101 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[$fontsize$, a4paper]{article}
+\usepackage{fontspec}
+\usepackage{xltxtra}
+
+% LAYOUT
+%--------------------------------
+\usepackage{geometry}
+\geometry{$geometry$}
+
+% No page numbers
+\pagenumbering{gobble}
+
+% Left align
+\usepackage[document]{ragged2e}
+
+% Trim excessive whitespace before lists
+\usepackage{enumitem}
+\setlist{nolistsep}
+
+% LANGUAGE
+%--------------------------------
+\usepackage{polyglossia}
+\setmainlanguage{english}
+
+% TYPOGRAPHY
+%--------------------------------
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\usepackage[protrusion=true,final]{microtype}
+
+% converts LaTeX specials (quotes, dashes etc.) to Unicode
+\defaultfontfeatures{Mapping=tex-text}
+\setromanfont [Ligatures={Common}, Numbers={OldStyle}]{Palatino}
+\setsansfont[Scale=0.9]{Helvetica Neue}
+\setmonofont[Scale=0.8]{Fira Code}
+
+% Set paragraph break
+\setlength{\parskip}{1em}
+
+% Custom ampersand
+\newcommand{\amper}{{\fontspec[Scale=.95]{Open Sans}\selectfont\itshape\&}}
+
+% Command required by how Pandoc handles the list conversion
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% PDF SETUP
+%--------------------------------
+\usepackage[xetex, bookmarks, colorlinks, breaklinks]{hyperref}
+\hypersetup
+{
+  pdfauthor={$author$},
+  pdfsubject={$subject$},
+  pdftitle={$subject$},
+  colorlinks,breaklinks,
+  filecolor=black,
+  urlcolor=[rgb]{0.117,0.682,0.858},
+  linkcolor=[rgb]{0.117,0.682,0.858},
+  linkcolor=[rgb]{0.117,0.682,0.858},
+  citecolor=[rgb]{0.117,0.682,0.858}
+}
+
+% To display custom date in the example
+$if(customdate)$
+\usepackage[$lang$]{datetime2}
+\DTMsavedate{customdate}{$customdate$}
+$endif$
+
+% DOCUMENT
+%--------------------------------
+\begin{document}
+\textsc{\textbf{$author$}}
+$for(from)$
+\textbullet{} \textsc{$from$}
+$endfor$
+
+\vspace{1em}
+
+\normalsize \sffamily
+
+\vspace{3em}
+
+\rmfamily
+\begin{flushright}
+  $city$, $if(customdate)$\DTMusedate{customdate}$else$\today$endif$
+\end{flushright}
+
+\vspace{1em}
+
+$if(subject)$
+\textbf{$subject$}
+$endif$
+
+\vspace{1em}
+
+$body$
+
+\end{document}
